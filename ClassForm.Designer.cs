@@ -185,7 +185,6 @@ namespace QuanLySinhVienVaLopHoc
             // 
             // Lop
             // 
-            this.Lop.DisplayIndex = 0;
             this.Lop.Text = "Lớp";
             this.Lop.Width = 186;
             // 
@@ -282,6 +281,7 @@ namespace QuanLySinhVienVaLopHoc
             this.Controls.Add(this.txtLop);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(1262, 698);
             this.Name = "ClassForm";
             this.Text = "ClassManagement";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

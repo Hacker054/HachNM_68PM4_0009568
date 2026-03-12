@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLySinhVienVaLopHoc
 {
     public partial class StudentForm : Form
     {
-        // Thêm dòng này vào ngay dưới phần khai báo class
+        // Danh sách gốc để lưu trữ toàn bộ dữ liệu sinh viên (phục vụ tìm kiếm)
         private List<ListViewItem> allStudents = new List<ListViewItem>();
+
         public StudentForm()
         {
             InitializeComponent();
-            // Căn giữa màn hình khi mở
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Quản Lý Sinh Viên";
+
+            // Thiết lập mặc định cho giới tính
+            if (rdbNam != null) rdbNam.Checked = true;
         }
+
+        // Hàm xóa trắng ô nhập liệu và reset các control
         private void ClearInput()
         {
             txtMaSV.Clear();
             txtTenSV.Clear();
             txtLop.Clear();
-            txtSearch.Clear(); // Reset luôn cả ô tìm kiếm nếu bạn muốn
-            txtMaSV.Focus();   // Đưa con trỏ chuột về ô đầu tiên để tiện nhập tiếp
+            txtSearch.Clear();
+            rdbNam.Checked = true;
+            dtpNgaySinh.Value = DateTime.Now;
+            txtMaSV.Focus();
         }
-        // 1. Chức năng THÊM (Cập nhật để lưu vào list gốc)
+
+        // 1. Chức năng THÊM
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMaSV.Text) || string.IsNullOrWhiteSpace(txtTenSV.Text))
@@ -38,12 +43,19 @@ namespace QuanLySinhVienVaLopHoc
                 return;
             }
 
-            ListViewItem item = new ListViewItem(txtMaSV.Text);
-            item.SubItems.Add(txtTenSV.Text);
-            item.SubItems.Add(txtLop.Text);
+            // Lấy giá trị từ các control mới
+            string gioiTinh = rdbNam.Checked ? "Nam" : "Nữ";
+            string ngaySinh = dtpNgaySinh.Value.ToString("dd/MM/yyyy");
+
+            ListViewItem item = new ListViewItem(txtTenSV.Text); // Cột 0: Tên
+            item.SubItems.Add(txtMaSV.Text);                   // Cột 1: Mã SV
+            item.SubItems.Add(txtLop.Text);                     // Cột 2: Lớp
+            item.SubItems.Add(gioiTinh);                        // Cột 3: Giới tính
+            item.SubItems.Add(ngaySinh);                        // Cột 4: Ngày sinh
 
             lsvSinhVien.Items.Add(item);
             allStudents.Add((ListViewItem)item.Clone()); // Lưu bản sao vào danh sách gốc
+
             ClearInput();
         }
 
@@ -55,22 +67,30 @@ namespace QuanLySinhVienVaLopHoc
                 ListViewItem itemUI = lsvSinhVien.SelectedItems[0];
                 string maSVHienTai = itemUI.Text;
 
-                // 1. Cập nhật trên giao diện (UI)
+                // Cập nhật thông tin trên giao diện (UI)
                 itemUI.Text = txtMaSV.Text;
                 itemUI.SubItems[1].Text = txtTenSV.Text;
                 itemUI.SubItems[2].Text = txtLop.Text;
+                itemUI.SubItems[3].Text = rdbNam.Checked ? "Nam" : "Nữ";
+                itemUI.SubItems[4].Text = dtpNgaySinh.Value.ToString("dd/MM/yyyy");
 
-                // 2. Cập nhật trong danh sách gốc (allStudents)
+                // Cập nhật thông tin trong danh sách gốc (allStudents)
                 var studentInList = allStudents.FirstOrDefault(s => s.Text == maSVHienTai);
                 if (studentInList != null)
                 {
                     studentInList.Text = txtMaSV.Text;
                     studentInList.SubItems[1].Text = txtTenSV.Text;
                     studentInList.SubItems[2].Text = txtLop.Text;
+                    studentInList.SubItems[3].Text = rdbNam.Checked ? "Nam" : "Nữ";
+                    studentInList.SubItems[4].Text = dtpNgaySinh.Value.ToString("dd/MM/yyyy");
                 }
 
                 MessageBox.Show("Cập nhật thành công!");
                 ClearInput();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một sinh viên trong danh sách để sửa!");
             }
         }
 
@@ -79,18 +99,13 @@ namespace QuanLySinhVienVaLopHoc
         {
             if (lsvSinhVien.SelectedItems.Count > 0)
             {
-                DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa sinh viên này?", "Xác nhận", MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa sinh viên này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    // 1. Lấy ra Item đang được chọn
                     ListViewItem selectedItem = lsvSinhVien.SelectedItems[0];
-                    string maSVCanXoa = selectedItem.Text; // Giả sử cột 0 là Mã SV
+                    string maSVCanXoa = selectedItem.Text;
 
-                    // 2. Xóa khỏi hiển thị trên ListView
                     lsvSinhVien.Items.Remove(selectedItem);
-
-                    // 3. QUAN TRỌNG: Xóa khỏi danh sách gốc (allStudents)
-                    // Tìm sinh viên trong list gốc có Mã SV trùng với dòng vừa chọn để xóa
                     allStudents.RemoveAll(s => s.Text == maSVCanXoa);
 
                     MessageBox.Show("Đã xóa dữ liệu thành công!");
@@ -103,13 +118,12 @@ namespace QuanLySinhVienVaLopHoc
             }
         }
 
-        // 4. Chức năng TÌM KIẾM & LỌC DỮ LIỆU
+        // 4. Chức năng TÌM KIẾM
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string keyword = txtSearch.Text.Trim().ToLower();
-            string searchType = cboSearchType.SelectedItem?.ToString(); // Lấy kiểu tìm kiếm đã chọn
+            string searchType = cboSearchType.SelectedItem?.ToString();
 
-            // Nếu để trống ô tìm kiếm, hiển thị lại toàn bộ
             if (string.IsNullOrEmpty(keyword))
             {
                 RefreshListView(allStudents);
@@ -123,20 +137,11 @@ namespace QuanLySinhVienVaLopHoc
                 bool isMatch = false;
 
                 if (searchType == "Mã SV")
-                {
-                    // Mã SV: Phải khớp hoàn toàn
                     isMatch = item.Text.ToLower().Equals(keyword);
-                }
                 else if (searchType == "Họ và tên")
-                {
-                    // Tên: Chứa một phần
                     isMatch = item.SubItems[1].Text.ToLower().Contains(keyword);
-                }
                 else if (searchType == "Lớp")
-                {
-                    // Lớp: Phải khớp hoàn toàn
                     isMatch = item.SubItems[2].Text.ToLower().Equals(keyword);
-                }
 
                 if (isMatch)
                 {
@@ -146,11 +151,10 @@ namespace QuanLySinhVienVaLopHoc
 
             if (lsvSinhVien.Items.Count == 0)
             {
-                MessageBox.Show("Không tìm thấy kết quả phù hợp với " + searchType + " này!");
+                MessageBox.Show("Không tìm thấy kết quả phù hợp!");
             }
         }
 
-        // Hàm hỗ trợ nạp lại danh sách
         private void RefreshListView(List<ListViewItem> source)
         {
             lsvSinhVien.Items.Clear();
@@ -160,7 +164,7 @@ namespace QuanLySinhVienVaLopHoc
             }
         }
 
-        // Sự kiện khi click vào một dòng trong ListView thì hiện lên Textbox
+        // Sự kiện khi click vào một dòng trong ListView thì hiện ngược lên các Textbox/Control
         private void lsvSinhVien_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lsvSinhVien.SelectedItems.Count > 0)
@@ -169,6 +173,19 @@ namespace QuanLySinhVienVaLopHoc
                 txtMaSV.Text = item.Text;
                 txtTenSV.Text = item.SubItems[1].Text;
                 txtLop.Text = item.SubItems[2].Text;
+
+                // Hiển thị lại Giới tính
+                if (item.SubItems[3].Text == "Nam")
+                    rdbNam.Checked = true;
+                else
+                    rdbNu.Checked = true;
+
+                // Hiển thị lại Ngày sinh
+                DateTime dt;
+                if (DateTime.TryParseExact(item.SubItems[4].Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+                {
+                    dtpNgaySinh.Value = dt;
+                }
             }
         }
 
@@ -177,14 +194,9 @@ namespace QuanLySinhVienVaLopHoc
             this.Close();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
+        // Các sự kiện trống (có thể xóa nếu không dùng)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void label5_Click(object sender, EventArgs e) { }
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
     }
 }
