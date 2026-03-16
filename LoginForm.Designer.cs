@@ -54,7 +54,6 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(257, 22);
             this.txtUsername.TabIndex = 1;
-            this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
             // 
             // btnLogin
             // 
@@ -95,7 +94,6 @@
             this.label1.Size = new System.Drawing.Size(112, 25);
             this.label1.TabIndex = 5;
             this.label1.Text = "Tên đăng nhập:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -106,7 +104,6 @@
             this.label2.Size = new System.Drawing.Size(112, 21);
             this.label2.TabIndex = 6;
             this.label2.Text = "Mật khẩu:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // LoginForm
             // 
@@ -119,7 +116,6 @@
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.txtPassword);
             this.Name = "LoginForm";
-            this.Load += new System.EventHandler(this.LoginForm_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

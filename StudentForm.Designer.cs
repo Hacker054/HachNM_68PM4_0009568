@@ -42,9 +42,11 @@ namespace QuanLySinhVienVaLopHoc
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.lsvSinhVien = new System.Windows.Forms.ListView();
-            this.MaSV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TenSV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.MaSV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Lop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.GioiTinh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.NgaySinh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -54,10 +56,8 @@ namespace QuanLySinhVienVaLopHoc
             this.label6 = new System.Windows.Forms.Label();
             this.dtpNgaySinh = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdbNam = new System.Windows.Forms.RadioButton();
             this.rdbNu = new System.Windows.Forms.RadioButton();
-            this.NgaySinh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.GioiTinh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.rdbNam = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -166,7 +166,6 @@ namespace QuanLySinhVienVaLopHoc
             this.btnExit.TabIndex = 10;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lsvSinhVien
             // 
@@ -188,23 +187,37 @@ namespace QuanLySinhVienVaLopHoc
             this.lsvSinhVien.View = System.Windows.Forms.View.Details;
             this.lsvSinhVien.SelectedIndexChanged += new System.EventHandler(this.lsvSinhVien_SelectedIndexChanged);
             // 
-            // MaSV
-            // 
-            this.MaSV.Text = "Mã SV";
-            this.MaSV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.MaSV.Width = 118;
-            // 
             // TenSV
             // 
             this.TenSV.Text = "Họ và Tên";
             this.TenSV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TenSV.Width = 227;
             // 
+            // MaSV
+            // 
+            this.MaSV.Text = "Mã SV";
+            this.MaSV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.MaSV.Width = 118;
+            // 
             // Lop
             // 
             this.Lop.Text = "Lớp";
             this.Lop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Lop.Width = 73;
+            // 
+            // GioiTinh
+            // 
+            this.GioiTinh.DisplayIndex = 4;
+            this.GioiTinh.Text = "Giới tính";
+            this.GioiTinh.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.GioiTinh.Width = 140;
+            // 
+            // NgaySinh
+            // 
+            this.NgaySinh.DisplayIndex = 3;
+            this.NgaySinh.Text = "Ngày sinh";
+            this.NgaySinh.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NgaySinh.Width = 184;
             // 
             // txtSearch
             // 
@@ -261,7 +274,6 @@ namespace QuanLySinhVienVaLopHoc
             this.cboSearchType.Name = "cboSearchType";
             this.cboSearchType.Size = new System.Drawing.Size(140, 28);
             this.cboSearchType.TabIndex = 16;
-            this.cboSearchType.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -273,7 +285,6 @@ namespace QuanLySinhVienVaLopHoc
             this.label5.Size = new System.Drawing.Size(282, 37);
             this.label5.TabIndex = 17;
             this.label5.Text = "Quản Lý Sinh Viên";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -306,17 +317,6 @@ namespace QuanLySinhVienVaLopHoc
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Giới tính:";
             // 
-            // rdbNam
-            // 
-            this.rdbNam.AutoSize = true;
-            this.rdbNam.Location = new System.Drawing.Point(12, 26);
-            this.rdbNam.Name = "rdbNam";
-            this.rdbNam.Size = new System.Drawing.Size(65, 24);
-            this.rdbNam.TabIndex = 0;
-            this.rdbNam.TabStop = true;
-            this.rdbNam.Text = "Nam";
-            this.rdbNam.UseVisualStyleBackColor = true;
-            // 
             // rdbNu
             // 
             this.rdbNu.AutoSize = true;
@@ -328,19 +328,16 @@ namespace QuanLySinhVienVaLopHoc
             this.rdbNu.Text = "Nữ";
             this.rdbNu.UseVisualStyleBackColor = true;
             // 
-            // NgaySinh
+            // rdbNam
             // 
-            this.NgaySinh.DisplayIndex = 3;
-            this.NgaySinh.Text = "Ngày sinh";
-            this.NgaySinh.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NgaySinh.Width = 184;
-            // 
-            // GioiTinh
-            // 
-            this.GioiTinh.DisplayIndex = 4;
-            this.GioiTinh.Text = "Giới tính";
-            this.GioiTinh.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.GioiTinh.Width = 140;
+            this.rdbNam.AutoSize = true;
+            this.rdbNam.Location = new System.Drawing.Point(12, 26);
+            this.rdbNam.Name = "rdbNam";
+            this.rdbNam.Size = new System.Drawing.Size(65, 24);
+            this.rdbNam.TabIndex = 0;
+            this.rdbNam.TabStop = true;
+            this.rdbNam.Text = "Nam";
+            this.rdbNam.UseVisualStyleBackColor = true;
             // 
             // StudentForm
             // 

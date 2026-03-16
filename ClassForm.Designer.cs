@@ -42,8 +42,8 @@ namespace QuanLySinhVienVaLopHoc
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.lsvLopHoc = new System.Windows.Forms.ListView();
-            this.MaLop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Lop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.MaLop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Khoa = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -158,14 +158,13 @@ namespace QuanLySinhVienVaLopHoc
             this.btnExit.TabIndex = 10;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lsvLopHoc
             // 
             this.lsvLopHoc.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lsvLopHoc.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.MaLop,
             this.Lop,
+            this.MaLop,
             this.Khoa});
             this.lsvLopHoc.FullRowSelect = true;
             this.lsvLopHoc.GridLines = true;
@@ -178,15 +177,17 @@ namespace QuanLySinhVienVaLopHoc
             this.lsvLopHoc.View = System.Windows.Forms.View.Details;
             this.lsvLopHoc.SelectedIndexChanged += new System.EventHandler(this.lsvLopHoc_SelectedIndexChanged);
             // 
-            // MaLop
-            // 
-            this.MaLop.Text = "Mã lớp";
-            this.MaLop.Width = 365;
-            // 
             // Lop
             // 
+            this.Lop.DisplayIndex = 1;
             this.Lop.Text = "Lớp";
             this.Lop.Width = 186;
+            // 
+            // MaLop
+            // 
+            this.MaLop.DisplayIndex = 0;
+            this.MaLop.Text = "Mã lớp";
+            this.MaLop.Width = 365;
             // 
             // Khoa
             // 

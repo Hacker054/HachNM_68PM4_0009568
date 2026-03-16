@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Data.SqlClient; // Thêm thư viện này để dùng SqlConnection
 
 namespace StudentManagementSystem
 {
@@ -10,24 +11,17 @@ namespace StudentManagementSystem
         public LoginForm()
         {
             InitializeComponent();
-
-            // Tự động kết nối sự kiện mà không cần thao tác ngoài Design
             this.Load += LoginForm_Load;
             this.btnLogin.Click += btnLogin_Click;
             this.btnExit.Click += btnExit_Click;
-
-            // Chỉnh Form ra giữa màn hình
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Hệ Thống Quản Lý - Đăng Nhập";
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            // Thiết lập giá trị mặc định theo yêu cầu của bạn
             txtUsername.Text = "hieuLX";
             txtPassword.Text = "msv";
-
-            // Tùy chỉnh màu sắc cho "xịn" hơn một chút
             btnLogin.BackColor = Color.LightBlue;
             btnExit.BackColor = Color.LightGray;
         }
@@ -37,22 +31,32 @@ namespace StudentManagementSystem
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
+            // 1. KIỂM TRA KẾT NỐI SQL SERVER TRƯỚC
+            try
+            {
+                using (SqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open(); // Thử mở kết nối
+                    // Nếu đến đây không lỗi thì kết nối SQL đã OK
+                }
+            }
+            catch (Exception ex)
+            {
+                // Nếu SQL lỗi (sai Server MSI\HACKMINH, sai pass sa...), nó sẽ hiện ở đây
+                MessageBox.Show("LỖI KẾT NỐI DATABASE:\n" + ex.Message, "Lỗi Hệ Thống",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Dừng lại luôn, không cho đăng nhập tiếp
+            }
+
+            // 2. LOGIC KIỂM TRA ĐĂNG NHẬP (Sau khi SQL đã thông suốt)
             if (username == "hieuLX" && password == "msv")
             {
                 MessageBox.Show("Chào mừng " + username + " đã quay trở lại!", "Thành công",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // 1. Ẩn LoginForm
                 this.Hide();
-
-                // 2. Mở MainForm (Cửa sổ chính chứa Panel)
-                // Đảm bảo bạn đã tạo file MainForm.cs trước đó
                 MainForm main = new MainForm();
-
-                // ShowDialog sẽ giữ code ở đây cho đến khi MainForm đóng lại
                 main.ShowDialog();
-
-                // 3. Sau khi đóng MainForm thì thoát hẳn ứng dụng
                 this.Close();
             }
             else
@@ -66,32 +70,11 @@ namespace StudentManagementSystem
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc muốn thoát ứng dụng?", "Xác nhận",
-                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có chắc muốn thoát?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit();
             }
-        }
-
-        private void txtUsername_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LoginForm_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
