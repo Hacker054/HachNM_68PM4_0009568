@@ -32,7 +32,6 @@ namespace QuanLySinhVienVaLopHoc
         private void InitializeComponent()
         {
             this.txtTenSV = new System.Windows.Forms.TextBox();
-            this.txtLop = new System.Windows.Forms.TextBox();
             this.txtMaSV = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,6 +57,7 @@ namespace QuanLySinhVienVaLopHoc
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rdbNu = new System.Windows.Forms.RadioButton();
             this.rdbNam = new System.Windows.Forms.RadioButton();
+            this.cboLopHoc = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -70,15 +70,6 @@ namespace QuanLySinhVienVaLopHoc
             this.txtTenSV.Name = "txtTenSV";
             this.txtTenSV.Size = new System.Drawing.Size(306, 27);
             this.txtTenSV.TabIndex = 0;
-            // 
-            // txtLop
-            // 
-            this.txtLop.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtLop.Location = new System.Drawing.Point(71, 376);
-            this.txtLop.Margin = new System.Windows.Forms.Padding(4);
-            this.txtLop.Name = "txtLop";
-            this.txtLop.Size = new System.Drawing.Size(306, 27);
-            this.txtLop.TabIndex = 1;
             // 
             // txtMaSV
             // 
@@ -339,12 +330,22 @@ namespace QuanLySinhVienVaLopHoc
             this.rdbNam.Text = "Nam";
             this.rdbNam.UseVisualStyleBackColor = true;
             // 
+            // cboLopHoc
+            // 
+            this.cboLopHoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLopHoc.FormattingEnabled = true;
+            this.cboLopHoc.Location = new System.Drawing.Point(70, 367);
+            this.cboLopHoc.Name = "cboLopHoc";
+            this.cboLopHoc.Size = new System.Drawing.Size(307, 28);
+            this.cboLopHoc.TabIndex = 27;
+            // 
             // StudentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1244, 767);
+            this.Controls.Add(this.cboLopHoc);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dtpNgaySinh);
             this.Controls.Add(this.label6);
@@ -363,7 +364,6 @@ namespace QuanLySinhVienVaLopHoc
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtMaSV);
-            this.Controls.Add(this.txtLop);
             this.Controls.Add(this.txtTenSV);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -381,7 +381,6 @@ namespace QuanLySinhVienVaLopHoc
         #endregion
 
         private TextBox txtTenSV;
-        private TextBox txtLop;
         private TextBox txtMaSV;
         private Label label1;
         private Label label2;
@@ -407,5 +406,6 @@ namespace QuanLySinhVienVaLopHoc
         private RadioButton rdbNam;
         private ColumnHeader NgaySinh;
         private ColumnHeader GioiTinh;
+        private ComboBox cboLopHoc;
     }
 }
